@@ -25,6 +25,15 @@
 
 
     plaidController.init = function(app) {
+        // Get the public token
+        app.get("/api/get_public_token", function(req, res) {
+            res.status(200).json({
+                PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
+                PLAID_ENV: PLAID_ENV,
+            });
+        });
+
+        // Get the access token
         app.post('/api/plaid/get_access_token', function(request, response, next) {
             PUBLIC_TOKEN = request.body.public_token;
             client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
@@ -41,6 +50,7 @@
             });
         });
 
+        // Get plaid authentication
         app.get('/api/plaid/auth', function(req, res, next) {
             // Retrieve Auth information for the Item, which includes high-level
             // account information and account numbers for depository auth.
@@ -58,6 +68,7 @@
             });
         });
 
+        // Get transasction history
         app.get('/api/plaid/transactions', function(request, response, next) {
             // Pull transactions for the Item for the last 30 days
             var startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');

@@ -31,12 +31,5 @@ db.once('open', function() {
     server.listen((process.env.PORT || 3000));
     console.log("kard test running on port: " + (process.env.PORT || 3000));
 
-    app.get("/", function(req, res) {
-        res.status(200).json({
-            PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
-            PLAID_ENV: PLAID_ENV,
-        });
-    });
-
     controllers.init(app);
 });
