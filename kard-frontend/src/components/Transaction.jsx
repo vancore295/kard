@@ -5,30 +5,8 @@ import $ from 'jquery';
 class Transaction extends Component {
     constructor() {
         super();
-        this.state = {
-            public_token: null,
-            access_token: null,
-            item_id: null,
-        };
+        this.state = {};
     }
-
-    getAccount() {
-        let access_token = this.state.access_token;
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:9000/api/plaid/transactions',
-            data: { access_token: access_token },
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
-    }
-
 
     render() {
         return (
