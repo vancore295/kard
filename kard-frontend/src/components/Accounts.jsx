@@ -11,9 +11,9 @@ class Accounts extends Component {
 
     render() {
         let accounts;
-        if(this.props.accounts) {
+        if (this.props.accounts) {
             accounts = this.props.accounts.map(account => {
-                return(
+                return (
                     <Account key={account.account_id} account={account} />
                 )
             })
@@ -21,7 +21,9 @@ class Accounts extends Component {
         return (
             <div>
                 <h1>Accounts</h1>
-                {accounts}
+                <div className="row">
+                    {accounts}
+                </div>
             </div>
         );
     }

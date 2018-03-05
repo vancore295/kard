@@ -42,7 +42,7 @@ class GetTransactions extends Component {
     render() {
         return (
             <div>
-                {this.props.accessToken && <button onClick={this.handleClick.bind(this)}>Get Transactions</button>}
+                {this.props.accessToken && <button className="btn btn-primary" onClick={this.handleClick.bind(this)}>Get Transactions</button>}
                 {this.state && this.state.total_transactions && <h3>Total Transactions: {this.state.total_transactions}</h3>}
                 {this.state && this.state.transactions && <Transactions transactions={this.state.transactions}/>}
             </div>

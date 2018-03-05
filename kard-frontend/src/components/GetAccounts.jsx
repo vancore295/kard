@@ -38,7 +38,7 @@ class GetAccounts extends Component {
     render() {
         return (
             <div>
-                {this.props.accessToken && <button onClick={this.handleClick.bind(this)}>Get Accounts</button>}
+                {this.props.accessToken && <button className="btn btn-primary" onClick={this.handleClick.bind(this)}>Get Accounts</button>}
                 {this.state && this.state.accounts && <Accounts accounts={this.state.accounts} />}
             </div>
         );

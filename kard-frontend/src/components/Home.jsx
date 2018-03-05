@@ -63,17 +63,24 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
-                {this.state && this.state.env_data &&
-                    <PlaidLink
-                        clientName="Kard code test"
-                        env={this.state.env_data.PLAID_ENV}
-                        product={["transactions"]}
-                        publicKey={this.state.env_data.PLAID_PUBLIC_KEY}
-                        onExit={this.handleOnExit.bind(this)}
-                        onSuccess={this.handleOnSuccess.bind(this)}>
-                        Open Link and connect your bank!
-        </PlaidLink>}
+            <div className="container">
+                <section className="row">
+                <h1 className="display-1">Kard Code test</h1>
+
+                    <section className="col-md-12">
+                        {this.state && this.state.env_data &&
+                            <PlaidLink
+                                clientName="Kard code test"
+                                env={this.state.env_data.PLAID_ENV}
+                                product={["transactions"]}
+                                publicKey={this.state.env_data.PLAID_PUBLIC_KEY}
+                                onExit={this.handleOnExit.bind(this)}
+                                onSuccess={this.handleOnSuccess.bind(this)}>
+                                Open Link and connect your bank!
+                        </PlaidLink>}
+                    </section>
+                </section>
+
 
                 {this.state && this.state.access_token && <GetAccounts accessToken={this.state.access_token} />}
                 {this.state && this.state.access_token && <GetTransactions accessToken={this.state.access_token} />}
