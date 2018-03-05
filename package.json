@@ -5,8 +5,10 @@
     "main": "server.js",
     "scripts": {
         "client": "cd kard-frontend && yarn start",
+        "build": "cd kard-frontend && yarn build",
         "server": "nodemon server.js",
         "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+        "prod": "concurrently --kill-others-on-fail \"yarn server\" \"yarn build\"",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Bomani Kernizan",
@@ -18,7 +20,7 @@
         "morgan": "^1.9.0",
         "mongoose": "^5.0.8",
         "path": "^0.12.7",
-        "plaid": "2.0.x",
+        "plaid": "^2.3.0",
         "concurrently": "^3.5.1"
     },
     "devDependencies": {
