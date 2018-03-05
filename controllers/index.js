@@ -3,5 +3,5 @@
 
     controllers.init = function(app) {
         plaidControlelr.init(app);
-    }
+    };
 })(module.exports);

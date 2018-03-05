@@ -37,7 +37,7 @@
         app.post('/api/plaid/get_access_token', function(request, response, next) {
             PUBLIC_TOKEN = request.body.public_token;
             client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
-                if (error != null) {
+                if (error !== null) {
                     var msg = 'Could not exchange public_token!';
                     console.log(msg + '\n' + error);
                     return response.json({ error: msg });
@@ -55,7 +55,7 @@
             // Retrieve Auth information for the Item, which includes high-level
             // account information and account numbers for depository auth.
             client.getAuth(ACCESS_TOKEN, function(error, numbersData) {
-                if (error != null) {
+                if (error !== null) {
                     var msg = 'Unable to pull accounts from Plaid API.';
                     console.log(msg + '\n' + error);
                     return response.json({ error: msg });
@@ -77,7 +77,7 @@
                 count: 250,
                 offset: 0,
             }, function(error, transactionsResponse) {
-                if (error != null) {
+                if (error !== null) {
                     console.log(JSON.stringify(error));
                     return response.json({ error: error });
                 }
