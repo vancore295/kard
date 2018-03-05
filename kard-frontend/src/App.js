@@ -57,23 +57,6 @@ class App extends Component {
         });
     }
 
-    getAccount() {
-        let access_token = this.state.access_token;
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:9000/api/plaid/accounts',
-            data: {access_token: access_token},
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                console.log(data);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.log(err);
-            }
-        });
-    }
-    
     componentWillMount(){
         this.getPublicEnvData();
     }
@@ -94,8 +77,8 @@ class App extends Component {
           Open Link and connect your bank!
         </PlaidLink>}
 
-        <GetAccounts />
-        <GetTransactions />
+        {this.state && this.state.access_token && <GetAccounts accessToken={this.state.access_token} />}
+        {this.state && this.state.access_token && <GetTransactions accessToken={this.state.access_token} />}
       </div>
     );
   }

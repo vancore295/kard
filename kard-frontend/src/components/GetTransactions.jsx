@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import Account from './Transaction';
-
+import Transactions from './Transactions';
 
 class GetTransactions extends Component {
     constructor() {
         super();
         this.state = {
-            public_token: null,
-            access_token: null,
-            item_id: null,
+            transactions: null,
+            total_transactions: null
         };
     }
 
     getTransactions() {
-        let access_token = this.state.access_token;
+        let access_token = this.props.accessToken;
         $.ajax({
             type: 'POST',
             url: 'http://localhost:9000/api/plaid/transactions',
@@ -22,6 +20,12 @@ class GetTransactions extends Component {
             dataType: 'json',
             cache: false,
             success: function (data) {
+                this.setState({
+                    transactions: data.transactions,
+                    total_transactions: data.total_transactions,
+                }, function (){
+                    console.log(data);
+                })
                 console.log(data);
             }.bind(this),
             error: function (xhr, status, err) {
@@ -38,7 +42,9 @@ class GetTransactions extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.handleClick.bind(this)}>Get Transactions</button>
+                {this.props.accessToken && <button onClick={this.handleClick.bind(this)}>Get Transactions</button>}
+                {this.state && this.state.total_transactions && <h3>Total Transactions: {this.state.total_transactions}</h3>}
+                {this.state && this.state.transactions && <Transactions transactions={this.state.transactions}/>}
             </div>
         );
     }
