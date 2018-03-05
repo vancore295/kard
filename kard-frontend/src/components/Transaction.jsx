@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-
 
 class Transaction extends Component {
     constructor() {
@@ -11,7 +9,9 @@ class Transaction extends Component {
     render() {
         return (
             <div>
-                <h1>Transaction</h1>
+                <h1>{this.props.transaction.name}</h1>
+                ${this.props.transaction.amount}<br/>
+                {this.props.transaction.date}
             </div>
         );
     }
