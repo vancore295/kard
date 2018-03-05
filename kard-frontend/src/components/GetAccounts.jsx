@@ -13,10 +13,10 @@ class GetAccounts extends Component {
         };
     }
 
-    getAccount() {
+    getAccounts() {
         let access_token = this.state.access_token;
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: 'http://localhost:9000/api/plaid/accounts',
             data: { access_token: access_token },
             dataType: 'json',
@@ -30,11 +30,15 @@ class GetAccounts extends Component {
         });
     }
 
+    handleGetAccount() {
+        this.getAccounts();
+    }
+
 
     render() {
         return (
             <div>
-                <h1>Get Accounts</h1>
+                <button onClick={this.handleGetAccount.bind(this)}>Get Accounts</button>
             </div>
         );
     }

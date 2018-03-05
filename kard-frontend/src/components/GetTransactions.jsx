@@ -13,11 +13,11 @@ class GetTransactions extends Component {
         };
     }
 
-    getAccount() {
+    getTransactions() {
         let access_token = this.state.access_token;
         $.ajax({
-            type: 'GET',
-            url: 'http://localhost:9000/api/plaid/accounts',
+            type: 'POST',
+            url: 'http://localhost:9000/api/plaid/transactions',
             data: { access_token: access_token },
             dataType: 'json',
             cache: false,
@@ -30,11 +30,15 @@ class GetTransactions extends Component {
         });
     }
 
+    handleClick() {
+        this.getTransactions();
+    }
+
 
     render() {
         return (
             <div>
-                <h1>Get Transactions</h1>
+                <button onClick={this.handleClick.bind(this)}>Get Transactions</button>
             </div>
         );
     }

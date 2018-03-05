@@ -6,7 +6,7 @@ var morgan = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
 var plaid = require('plaid');
-var cors = require('cors')
+var cors = require('cors');
 var app = express();
 
 dotenv.load({ path: '.env' });

@@ -2,6 +2,7 @@
     var path = require("path");
     var dotenv = require("dotenv");
     var plaid = require('plaid');
+    var moment = require('moment');
 
     var PLAID_CLIENT_ID = (process.env.PLAID_CLIENT_ID);
     var PLAID_SECRET = (process.env.PLAID_SECRET);
@@ -34,19 +35,19 @@
         });
 
         // Get the access token
-        app.post('/api/plaid/get_access_token', function(request, response, next) {
-            PUBLIC_TOKEN = request.body.public_token;
+        app.post('/api/plaid/get_access_token', function(req, res, next) {
+            PUBLIC_TOKEN = req.body.public_token;
             client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
                 if (error !== null) {
                     var msg = 'Could not exchange public_token!';
                     console.log(msg + '\n' + error);
-                    return response.json({ error: msg });
+                    return res.json({ error: msg });
                 }
                 ACCESS_TOKEN = tokenResponse.access_token;
                 ITEM_ID = tokenResponse.item_id;
                 console.log('Access Token: ' + ACCESS_TOKEN);
                 console.log('Item ID: ' + ITEM_ID);
-                response.json({ 
+                res.json({ 
                     access_token: ACCESS_TOKEN,
                     item_id: ITEM_ID,
                     'error': false });
@@ -57,7 +58,6 @@
         app.post('/api/plaid/accounts', function(req, res, next) {
             // Retrieve Auth information for the Item, which includes high-level
             // account information and account numbers for depository auth.
-            console.log(req.body.access_token);
             ACCESS_TOKEN = req.body.access_token;
             client.getAuth(ACCESS_TOKEN, function(error, numbersData) {
                 if (error !== null) {
@@ -74,7 +74,8 @@
         });
 
         // Get transasction history
-        app.get('/api/plaid/transactions', function(request, response, next) {
+        app.post('/api/plaid/transactions', function(req, res, next) {
+            ACCESS_TOKEN = req.body.access_token;
             // Pull transactions for the Item for the last 30 days
             var startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
             var endDate = moment().format('YYYY-MM-DD');
@@ -84,10 +85,10 @@
             }, function(error, transactionsResponse) {
                 if (error !== null) {
                     console.log(JSON.stringify(error));
-                    return response.json({ error: error });
+                    return res.json({ error: error });
                 }
                 console.log('pulled ' + transactionsResponse.transactions.length + ' transactions');
-                response.json(transactionsResponse);
+                res.json(transactionsResponse);
             });
         });
     };
