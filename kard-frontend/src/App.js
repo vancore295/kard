@@ -7,23 +7,45 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            public_token: null
+            public_token: null,
+            access_token: null,
+            item_id: null,
         };
     }
 
     handleOnSuccess(token, metadata) {
         // send token to client server
+        this.setState({public_token: token});
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:9000/api/plaid/get_access_token',
+            data: {public_token: token},
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({
+                    access_token: data.access_token,
+                    item_id: data.item_id
+                }, function () {
+                    console.log("public token: ", token);
+                });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.log(err);
+            }
+        });
     }
     handleOnExit() {
         // handle the case when your user exits Link
     }
-    getPublicToken(){
+    getPublicEnvData(){
         $.ajax({
-            url: 'http://localhost:9000/api/get_public_token',
+            type: 'GET',
+            url: 'http://localhost:9000/api/plaid/get_public_token',
             dataType: 'json',
             cache: false,
             success: function(token) {
-                this.setState({public_token: token}, function () {
+                this.setState({env_data: token}, function () {
                     console.log(token);
                 });
             }.bind(this),
@@ -32,9 +54,26 @@ class App extends Component {
             }
         });
     }
+
+    getAccount() {
+        let access_token = this.state.access_token;
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:9000/api/plaid/accounts',
+            data: {access_token: access_token},
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                console.log(data);
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.log(err);
+            }
+        });
+    }
     
     componentWillMount(){
-        this.getPublicToken();
+        this.getPublicEnvData();
     }
 
   render() {
@@ -42,14 +81,14 @@ class App extends Component {
       <div className="App">
       <h1>Hello World</h1>
 
-      {this.state && this.state.public_token && 
+      {this.state && this.state.env_data && 
           <PlaidLink
           clientName="Krad code test"
-          env={this.state.public_token.PLAID_ENV}
-          product={["auth", "transactions"]}
-          publicKey={this.state.public_token.PLAID_PUBLIC_KEY}
-          onExit={this.handleOnExit}
-          onSuccess={this.handleOnSuccess}>
+          env={this.state.env_data.PLAID_ENV}
+          product={["transactions"]}
+          publicKey={this.state.env_data.PLAID_PUBLIC_KEY}
+          onExit={this.handleOnExit.bind(this)}
+          onSuccess={this.handleOnSuccess.bind(this)}>
           Open Link and connect your bank!
         </PlaidLink>
     }

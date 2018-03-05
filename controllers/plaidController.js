@@ -26,7 +26,7 @@
 
     plaidController.init = function(app) {
         // Get the public token
-        app.get("/api/get_public_token", function(req, res) {
+        app.get("/api/plaid/get_public_token", function(req, res) {
             res.status(200).json({
                 PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
                 PLAID_ENV: PLAID_ENV,
@@ -46,21 +46,26 @@
                 ITEM_ID = tokenResponse.item_id;
                 console.log('Access Token: ' + ACCESS_TOKEN);
                 console.log('Item ID: ' + ITEM_ID);
-                response.json({ 'error': false });
+                response.json({ 
+                    access_token: ACCESS_TOKEN,
+                    item_id: ITEM_ID,
+                    'error': false });
             });
         });
 
         // Get plaid authentication
-        app.get('/api/plaid/auth', function(req, res, next) {
+        app.post('/api/plaid/accounts', function(req, res, next) {
             // Retrieve Auth information for the Item, which includes high-level
             // account information and account numbers for depository auth.
+            console.log(req.body.access_token);
+            ACCESS_TOKEN = req.body.access_token;
             client.getAuth(ACCESS_TOKEN, function(error, numbersData) {
                 if (error !== null) {
                     var msg = 'Unable to pull accounts from Plaid API.';
                     console.log(msg + '\n' + error);
-                    return response.json({ error: msg });
+                    return res.json({ error: msg });
                 }
-                response.json({
+                res.json({
                     error: false,
                     accounts: numbersData.accounts,
                     numbers: numbersData.numbers,
