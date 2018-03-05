@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PlaidLink from 'react-plaid-link';
 import $ from 'jquery';
+import GetAccounts from './components/GetAccounts';
+import GetTransactions from './components/GetTransactions';
 import './App.css';
 
 class App extends Component {
@@ -83,16 +85,17 @@ class App extends Component {
 
       {this.state && this.state.env_data && 
           <PlaidLink
-          clientName="Krad code test"
+          clientName="Kard code test"
           env={this.state.env_data.PLAID_ENV}
           product={["transactions"]}
           publicKey={this.state.env_data.PLAID_PUBLIC_KEY}
           onExit={this.handleOnExit.bind(this)}
           onSuccess={this.handleOnSuccess.bind(this)}>
           Open Link and connect your bank!
-        </PlaidLink>
-    }
+        </PlaidLink>}
 
+        <GetAccounts />
+        <GetTransactions />
       </div>
     );
   }
