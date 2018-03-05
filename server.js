@@ -6,11 +6,12 @@ var morgan = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
 var plaid = require('plaid');
+var cors = require('cors')
 var app = express();
 
 dotenv.load({ path: '.env' });
 app.set('port', (process.env.PORT || 3000));
-
+app.use(cors());
 var PLAID_PUBLIC_KEY = (process.env.PLAID_PUBLIC_KEY);
 var PLAID_ENV = (process.env.PLAID_ENV);
 

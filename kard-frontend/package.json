@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "jquery": "^3.3.1",
     "npm": "^5.7.1",
     "plaid": "^2.3.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-plaid-link": "^1.0.2",
     "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
     "start": "^5.1.0"
   },
   "scripts": {
