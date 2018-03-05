@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import PlaidLink from 'react-plaid-link';
+
 import './App.css';
 
 class App extends Component {
+  handleOnSuccess(token, metadata) {
+    // send token to client server
+  }
+  handleOnExit() {
+    // handle the case when your user exits Link
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <h1>Hello World</h1>
+      <PlaidLink
+        clientName="Krad code test"
+        env="sandbox"
+        product={["auth", "transactions"]}
+        publicKey="PLAID_PUBLIC_KEY"
+        onExit={this.handleOnExit}
+        onSuccess={this.handleOnSuccess}>
+        Open Link and connect your bank!
+      </PlaidLink>
       </div>
     );
   }
