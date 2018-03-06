@@ -8,10 +8,14 @@ class Transaction extends Component {
 
     render() {
         return (
-            <div>
-                <h1>{this.props.transaction.name}</h1>
-                ${this.props.transaction.amount}<br/>
-                {this.props.transaction.date}
+            <div className="col-md-3">
+                <div className="card text-white bg-info mb-3">
+                    <div className="card-body">
+                        <label>Name: {this.props.transaction.name}</label><br/>
+                        <label>Ammount:${this.props.transaction.amount}</label><br/>
+                        <label>Date:{this.props.transaction.date}</label>
+                    </div>
+                </div>
             </div>
         );
     }

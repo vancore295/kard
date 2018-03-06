@@ -54,10 +54,16 @@ class Transactions extends Component {
         return (
             <div>
                 <h1>Transactions</h1>
-                {this.state && this.state.transactions && <buttton className="btn btn-primary" onClick={this.handleSortByDate.bind(this)}>Sort By Date</buttton>}
-                {this.state && this.state.transactions && <buttton className="btn btn-primary" onClick={this.handlSortByName.bind(this)}>Sort By Name</buttton>}
-                {this.state && this.state.transactions && <buttton className="btn btn-primary" onClick={this.handlSortByAmmount.bind(this)}>Sort By Ammount</buttton>}
-                {transactions}
+                <div className="row">
+                    <div className="btn-group" role="group">
+                        {this.state && this.state.transactions && <buttton className="btn btn-primary" onClick={this.handleSortByDate.bind(this)}>Sort By Date</buttton>}
+                        {this.state && this.state.transactions && <buttton className="btn btn-primary" onClick={this.handlSortByName.bind(this)}>Sort By Name</buttton>}
+                        {this.state && this.state.transactions && <buttton className="btn btn-primary" onClick={this.handlSortByAmmount.bind(this)}>Sort By Ammount</buttton>}
+                    </div>
+                </div>
+                <div className="row">
+                    {transactions}
+                </div>
             </div>
         );
     }
